@@ -11,6 +11,9 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 public final class GsonUtil {
+    //Demo
+    //      List<Wall> walls=  GsonUtil.fromJsonString("",new TypeToken<List<Wall>>(){}.getType());
+    //      Wall wall=  GsonUtil.fromJsonString("",Wall.class);
 
     private static final Gson gson = new Gson();
 
