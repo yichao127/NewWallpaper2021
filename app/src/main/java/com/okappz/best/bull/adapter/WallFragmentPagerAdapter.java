@@ -15,6 +15,7 @@ public class WallFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
     private List<Integer> mItems = new ArrayList<>();
 
+
     public void addAll(List<Integer> items) {
         mItems = new ArrayList<>(items);
     }
