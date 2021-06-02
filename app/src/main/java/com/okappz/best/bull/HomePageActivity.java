@@ -38,12 +38,12 @@ public class HomePageActivity extends AppCompatActivity {
 
 
         Fragment everyDayFragment = new ChoiceDayFragment(screenWidth);
-        Fragment sortFragment = new SortFragment();
-        Fragment videoFragment = new VideoFragment();
+        Fragment sortFragment = new SortFragment(screenWidth);
+        Fragment videoFragment = new VideoFragment(screenWidth);
         List<Fragment> fragments = new ArrayList();
         fragments.add(everyDayFragment);
-        fragments.add(sortFragment);
         fragments.add(videoFragment);
+        fragments.add(sortFragment);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         WallFragmentPagerAdapter wallFragmentPagerAdapter = new WallFragmentPagerAdapter(fragmentManager, fragments);
