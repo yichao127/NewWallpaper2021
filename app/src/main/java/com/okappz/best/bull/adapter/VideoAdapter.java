@@ -42,14 +42,16 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MainViewHolder mholder = (MainViewHolder)holder;
 
+        String hum = walls.get(position).getPreview();
+
 
         Glide.with(context).load(URLConst.BASE_URL+walls.get(position).thumbnail).into(mholder.video_img);
         mholder.video_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VideoActivity.class);
-        //        intent.putExtra(WallActivity.IMG_URL, item);
-        //        intent.putExtra(WallActivity.WALLID, walls.get(index).wallpaperId);
+                intent.putExtra(VideoActivity.THUMBNAIL,walls.get(position).getPreview());
+                intent.putExtra(VideoActivity.PREVIEW,walls.get(position).getPreview());
                 context.startActivity(intent);
             }
         });
@@ -58,7 +60,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 10;
+        return walls.size();
     }
 
     static class MainViewHolder extends RecyclerView.ViewHolder {
