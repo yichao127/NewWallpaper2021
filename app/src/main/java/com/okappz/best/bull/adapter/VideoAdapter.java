@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.okappz.best.bull.R;
 import com.okappz.best.bull.VideoActivity;
 import com.okappz.best.bull.entty.Wall;
+import com.okappz.best.bull.net.URLConst;
 
 import java.util.List;
 
@@ -40,9 +41,9 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MainViewHolder mholder = (MainViewHolder)holder;
-//        String item = walls.get(index).path;
-//        long id = walls.get(index).wallpaperId;
-        Glide.with(context).load("http://192.168.18.240:8080/newWallPaper/image/every/2.jpg").into(mholder.video_img);
+
+
+        Glide.with(context).load(URLConst.BASE_URL+walls.get(position).thumbnail).into(mholder.video_img);
         mholder.video_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
