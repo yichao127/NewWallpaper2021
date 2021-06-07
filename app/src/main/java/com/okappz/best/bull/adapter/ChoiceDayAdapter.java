@@ -55,7 +55,6 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (holder instanceof VerticalHolder) {
             VerticalHolder mholder = (VerticalHolder) holder;
-            Glide.with(context).load("http://192.168.18.240:8080/newWallPaper/image/every/1.jpg").into(mholder.everyday_view);
         }else {
 //            showBanner(bannerViewPager,indicator);
         }

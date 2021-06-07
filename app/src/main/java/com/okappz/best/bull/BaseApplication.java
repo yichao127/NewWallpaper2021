@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Environment;
 
 import com.okappz.best.bull.net.HttpInterceptor;
+import com.okappz.best.bull.util.UtilDownload;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.annotation.CacheType;
@@ -17,16 +18,22 @@ import java.io.File;
 import java.io.IOException;
 
 public class BaseApplication extends Application {
+  private static   Application instance;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        instance=this;
         initNet();
+    }
+    public static Application getInstance(){
+        return instance;
     }
 
     private void initNet(){
-        String downloadFileDir = Environment.getExternalStorageDirectory().getPath()+"/okHttp_download/";
-        String cacheDir = Environment.getExternalStorageDirectory().getPath()+"/okHttp_cache";
+        String downloadFileDir = UtilDownload.getPathDownload();
+        String cacheDir = UtilDownload.getPathCache();
         OkHttpUtil.init(this)
                 .setConnectTimeout(15)//连接超时时间
                 .setWriteTimeout(15)//写超时时间
