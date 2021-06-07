@@ -40,7 +40,7 @@ public class HomePageActivity extends AppCompatActivity {
         Fragment everyDayFragment = new ChoiceDayFragment(screenWidth);
         Fragment sortFragment = new SortFragment(screenWidth);
         Fragment videoFragment = new VideoFragment(screenWidth);
-        List<Fragment> fragments = new ArrayList();
+        List<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(everyDayFragment);
         fragments.add(videoFragment);
         fragments.add(sortFragment);
