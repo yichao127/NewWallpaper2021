@@ -43,6 +43,7 @@ public class SortAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MainViewHolder mholder = (MainViewHolder)holder;
+        Sort sort=sorts.get(position);
         mholder.sort_Text.setText(sorts.get(position).title);
         Glide.with(context).load(URLConst.BASE_URL+SORTAND+sorts.get(position).thumbnail).into(mholder.sort_img);
         mholder.sort_img.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,7 @@ public class SortAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, SortActivity.class);
                 //        intent.putExtra(WallActivity.IMG_URL, item);
-                //        intent.putExtra(WallActivity.WALLID, walls.get(index).wallpaperId);
+                        intent.putExtra(SortActivity.JSON_ID, sort.json_id);
                 context.startActivity(intent);
             }
         });

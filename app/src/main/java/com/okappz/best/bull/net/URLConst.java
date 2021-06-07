@@ -5,4 +5,5 @@ public class URLConst {
     public static final String EVERY_DAY="EveryDay";
     public static final String SORT="Sort";
     public static final String SORTAND="image/wall/sort/";
+    public static final String SORT_DETAILED="image/wall/sort/Black/";
 }
