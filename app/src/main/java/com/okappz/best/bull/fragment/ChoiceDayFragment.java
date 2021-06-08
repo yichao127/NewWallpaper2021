@@ -11,17 +11,30 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.reflect.TypeToken;
 import com.okappz.best.bull.R;
 import com.okappz.best.bull.adapter.ChoiceDayAdapter;
 import com.okappz.best.bull.base.PageHelperBean;
 import com.okappz.best.bull.entty.Wall;
+import com.okappz.best.bull.net.GsonUtil;
+import com.okhttplib.HttpInfo;
+import com.okhttplib.OkHttpUtil;
+import com.okhttplib.callback.Callback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.okappz.best.bull.net.URLConst.BASE_URL;
+import static com.okappz.best.bull.net.URLConst.EVERY_DAY;
+
 public class ChoiceDayFragment extends Fragment {
-    List<Wall> walls;
+
+    private List<Wall> walls;
+
     private int screenWidth;
+    private RecyclerView recyclerView;
+
 
     private static final int[] RESID = {
             R.mipmap.beauty1,
@@ -54,10 +67,9 @@ public class ChoiceDayFragment extends Fragment {
         }
 
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_everyday);
+         recyclerView = view.findViewById(R.id.recycler_everyday);
         GridLayoutManager manager = new GridLayoutManager(view.getContext(), 3);
         recyclerView.setLayoutManager(manager);
-        ChoiceDayAdapter everyDayAdapter = new ChoiceDayAdapter(view.getContext(),screenWidth,mDatas);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -68,7 +80,36 @@ public class ChoiceDayFragment extends Fragment {
             }
         });
 
-        recyclerView.setAdapter(everyDayAdapter);
+//        ChoiceDayAdapter everyDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
+//        recyclerView.setAdapter(everyDayAdapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dowJson();
+            }
+        }).start();
+
+
+    }
+
+    public void dowJson() {
+        OkHttpUtil.getDefault(this).doGetAsync(
+                HttpInfo.Builder().setUrl(BASE_URL+EVERY_DAY).build(),
+                new Callback() {
+                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                    }
+
+                    @Override
+                    public void onSuccess(HttpInfo info) throws IOException {
+                        String sJson = info.getRetDetail();
+                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
+                        }.getType());
+                        ChoiceDayAdapter choiceDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
+                        recyclerView.setAdapter(choiceDayAdapter);
+                    }
+                });
     }
 
 }
