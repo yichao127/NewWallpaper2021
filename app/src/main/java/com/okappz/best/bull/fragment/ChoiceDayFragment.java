@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.okappz.best.bull.net.URLConst.BASE_URL;
-import static com.okappz.best.bull.net.URLConst.EVERY_DAY;
+import static com.okappz.best.bull.net.URLConst.CHOICEDAY;
 
 public class ChoiceDayFragment extends Fragment {
 
@@ -86,16 +86,17 @@ public class ChoiceDayFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                dowJson();
+//                dowJsonHorizontal();
+//                dowJsonVertical();
             }
         }).start();
 
 
     }
 
-    public void dowJson() {
+    public void dowJsonHorizontal() {
         OkHttpUtil.getDefault(this).doGetAsync(
-                HttpInfo.Builder().setUrl(BASE_URL+EVERY_DAY).build(),
+                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
                 new Callback() {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
@@ -111,5 +112,26 @@ public class ChoiceDayFragment extends Fragment {
                     }
                 });
     }
+
+    public void dowJsonVertical() {
+        OkHttpUtil.getDefault(this).doGetAsync(
+                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
+                new Callback() {
+                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                    }
+
+                    @Override
+                    public void onSuccess(HttpInfo info) throws IOException {
+                        String sJson = info.getRetDetail();
+                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
+                        }.getType());
+                        ChoiceDayAdapter choiceDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
+                        recyclerView.setAdapter(choiceDayAdapter);
+                    }
+                });
+    }
+
+
 
 }

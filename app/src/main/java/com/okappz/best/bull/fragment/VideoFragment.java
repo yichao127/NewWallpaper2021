@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.okappz.best.bull.net.URLConst.BASE_URL;
-import static com.okappz.best.bull.net.URLConst.EVERY_DAY;
+import static com.okappz.best.bull.net.URLConst.CHOICEDAY;
 
 public class VideoFragment extends Fragment {
     //    private List<Wall> walls;
@@ -63,10 +63,11 @@ public class VideoFragment extends Fragment {
 
     public void dowJson() {
         OkHttpUtil.getDefault(this).doGetAsync(
-                HttpInfo.Builder().setUrl(BASE_URL+EVERY_DAY).build(),
+                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
                 new Callback() {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
+
                     }
 
                     @Override
