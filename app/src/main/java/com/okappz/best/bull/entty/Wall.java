@@ -5,7 +5,6 @@ public class Wall {
     public String wallThumbnailPath;
     public String wall4kPath;
 
-
     public String title;
     public int is_free;
     public String thumbnail;

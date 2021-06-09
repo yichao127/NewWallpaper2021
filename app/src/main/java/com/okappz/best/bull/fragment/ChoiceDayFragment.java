@@ -17,6 +17,7 @@ import com.okappz.best.bull.adapter.ChoiceDayAdapter;
 import com.okappz.best.bull.base.PageHelperBean;
 import com.okappz.best.bull.entty.Wall;
 import com.okappz.best.bull.net.GsonUtil;
+import com.okappz.best.bull.net.URLConst;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.callback.Callback;
@@ -30,10 +31,9 @@ import static com.okappz.best.bull.net.URLConst.CHOICEDAY;
 
 public class ChoiceDayFragment extends Fragment {
 
-    private List<Wall> walls;
-
     private int screenWidth;
     private RecyclerView recyclerView;
+    private ChoiceDayAdapter choiceDayAdapter;
 
 
     private static final int[] RESID = {
@@ -44,7 +44,7 @@ public class ChoiceDayFragment extends Fragment {
     private static final String[] TEXT = {"图像处理", "LSB开发", "游戏开发"};
     private List<PageHelperBean> mDatas;
 
-    public ChoiceDayFragment(int screenWidth){
+    public ChoiceDayFragment(int screenWidth) {
         this.screenWidth = screenWidth;
     }
 
@@ -53,6 +53,7 @@ public class ChoiceDayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_everyday, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,10 +67,12 @@ public class ChoiceDayFragment extends Fragment {
             mDatas.add(bean);
         }
 
-
-         recyclerView = view.findViewById(R.id.recycler_everyday);
+        recyclerView = view.findViewById(R.id.recycler_everyday);
         GridLayoutManager manager = new GridLayoutManager(view.getContext(), 3);
         recyclerView.setLayoutManager(manager);
+        choiceDayAdapter  = new ChoiceDayAdapter(getContext(), screenWidth);
+        recyclerView.setAdapter(choiceDayAdapter);
+
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -79,43 +82,33 @@ public class ChoiceDayFragment extends Fragment {
                 return 1;
             }
         });
-
-//        ChoiceDayAdapter everyDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
-//        recyclerView.setAdapter(everyDayAdapter);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                dowJsonHorizontal();
-                dowJsonVertical();
-            }
-        }).start();
-
-
+        dowJsonHorizontal();
     }
 
-//    public void dowJsonHorizontal() {
-//        OkHttpUtil.getDefault(this).doGetAsync(
-//                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
-//                new Callback() {
-//                    @Override
-//                    public void onFailure(HttpInfo info) throws IOException {
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(HttpInfo info) throws IOException {
-//                        String sJson = info.getRetDetail();
-//                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
-//                        }.getType());
-//                        ChoiceDayAdapter choiceDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
-//                        recyclerView.setAdapter(choiceDayAdapter);
-//                    }
-//                });
-//    }
+    public void dowJsonHorizontal() {
+        OkHttpUtil.getDefault(this).doGetAsync(
+                HttpInfo.Builder().setUrl(BASE_URL + URLConst.EVERYDAY).build(),
+                new Callback() {
+                    @Override
+                    public void onFailure(HttpInfo info) throws IOException {
+                        dowJsonVertical();
+                    }
+
+                    @Override
+                    public void onSuccess(HttpInfo info) throws IOException {
+                        String sJson = info.getRetDetail();
+                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
+                        }.getType());
+                        choiceDayAdapter.addHorizontalDatas(walls);
+                        dowJsonVertical();
+                    }
+                });
+    }
+
 
     public void dowJsonVertical() {
         OkHttpUtil.getDefault(this).doGetAsync(
-                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
+                HttpInfo.Builder().setUrl(BASE_URL + CHOICEDAY).build(),
                 new Callback() {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
@@ -126,12 +119,10 @@ public class ChoiceDayFragment extends Fragment {
                         String sJson = info.getRetDetail();
                         List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
                         }.getType());
-                        ChoiceDayAdapter choiceDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
-                        recyclerView.setAdapter(choiceDayAdapter);
+                        choiceDayAdapter.addVerticalDatas(walls);
                     }
                 });
     }
-
 
 
 }

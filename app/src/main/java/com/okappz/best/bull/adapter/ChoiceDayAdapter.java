@@ -2,102 +2,109 @@ package com.okappz.best.bull.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.okappz.best.bull.ChoiceDayActivity;
 import com.okappz.best.bull.R;
 import com.okappz.best.bull.VideoActivity;
-import com.okappz.best.bull.base.PageHelperBean;
 import com.okappz.best.bull.entty.Wall;
 import com.okappz.best.bull.net.URLConst;
+import com.zhengsr.viewpagerlib.callback.PageHelperListener;
+import com.zhengsr.viewpagerlib.view.BannerViewPager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-
-    private List<Wall> walls; // 数据源
+    private List<Wall> VerticalDatas = new ArrayList<>();; // 数据源
+    private static List<Wall> horizontalDatas;
     private Context context;
     private static int screenWidth;
-
     private final int HORIZONTAL_VIEW = 1000;
     private final int VERTICAL_VIEW = 1001;
-    private final int GRID_VIEW = 1002;
-
-    private  List<PageHelperBean> mDatas;
 
 
-
-
-
-    public ChoiceDayAdapter(Context context, int screenWidth,List<PageHelperBean> mDatas, List<Wall> walls) {
+    public ChoiceDayAdapter(Context context, int screenWidth) {
         this.context = context;
-        this.screenWidth = screenWidth;
-        this.mDatas = mDatas;
-        this.walls = walls;
+        VerticalDatas.add(new Wall());
+        ChoiceDayAdapter.screenWidth = screenWidth;
     }
+
+    public void addHorizontalDatas(List<Wall> horizontalDatas) {
+        this.horizontalDatas=horizontalDatas;
+        notifyItemChanged(0);
+    }
+
+    public void addVerticalDatas(List<Wall> VerticalDatas) {
+        this.VerticalDatas.addAll(VerticalDatas);
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
-        if(HORIZONTAL_VIEW==viewType){
+        if (HORIZONTAL_VIEW == viewType) {
             return new HorizontalViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_choice_day_horizontal, null, false));
-
-
-        } else{
+        } else {
             return new VerticalViewHolder(LayoutInflater.from(context).inflate(R.layout.adapter_choice_day_vertical, null, false));
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
         if (holder instanceof HorizontalViewHolder) {
+            HorizontalViewHolder horizontalViewHolder = (HorizontalViewHolder) holder;
+            horizontalViewHolder.bannerViewPager.setCurrentPosition(0);
+            horizontalViewHolder.bannerViewPager.setPageListener(R.layout.loop_layout, horizontalDatas, new PageHelperListener<Wall>() {
+                @Override
+                public void bindView(View view, final Wall data, int position) {
+                    ImageView imageView = view.findViewById(R.id.loop_icon);
+                    Glide.with(view)
+                            .load(data.thumbnail)
+                            .into(imageView);
+                }
 
-            ((HorizontalViewHolder) holder).hor_recyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            ((HorizontalViewHolder) holder).hor_recyclerview.setAdapter(new HorizontalAdapter(context,walls,screenWidth));
-
-        }else {
-
+                @Override
+                public void onItemClick(View view, Wall data, int position) {
+                    super.onItemClick(view, data, position);
+                }
+            });
+        } else {
             VerticalViewHolder mholder = (VerticalViewHolder) holder;
-            Glide.with(context).load(URLConst.BASE_URL+walls.get(position).thumbnail).into(mholder.choice_day_vertical_view);
+            Glide.with(context).load(URLConst.BASE_URL + VerticalDatas.get(position).thumbnail).into(mholder.choice_day_vertical_view);
             mholder.choice_day_vertical_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ChoiceDayActivity.class);
-                    intent.putExtra(VideoActivity.THUMBNAIL,walls.get(position).getPreview());
-                    intent.putExtra(VideoActivity.PREVIEW,walls.get(position).getPreview());
+                    intent.putExtra(VideoActivity.THUMBNAIL, VerticalDatas.get(position).getPreview());
+                    intent.putExtra(VideoActivity.PREVIEW, VerticalDatas.get(position).getPreview());
                     context.startActivity(intent);
                 }
             });
 
         }
-//        mholder.test1.setText("aaaaa");
     }
 
     @Override
     public int getItemCount() {
-        return walls.size();
+        return VerticalDatas.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0){
+        if (position == 0) {
             return HORIZONTAL_VIEW;
         }
-        return  VERTICAL_VIEW;
+        return VERTICAL_VIEW;
     }
 
     static class VerticalViewHolder extends RecyclerView.ViewHolder {
@@ -109,106 +116,20 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.itemView = itemView;
             choice_day_vertical_view = itemView.findViewById(R.id.choice_day_vertical_view);
 
-            if(choice_day_vertical_view!=null){
+            if (choice_day_vertical_view != null) {
                 ViewGroup.LayoutParams layoutParams = choice_day_vertical_view.getLayoutParams();
                 layoutParams.width = layoutParams.height = screenWidth / 3;
+                choice_day_vertical_view.setLayoutParams(layoutParams);
             }
 
         }
     }
 
-
-
-    static class HorizontalViewHolder extends  RecyclerView.ViewHolder{
-        private RecyclerView hor_recyclerview;
-
-        private List<Integer> data;
-
-        private int scrollX;//纪录X移动的距离
-
-        private static int HORIZONTAL_VIEW_X = 0;//水平RecyclerView滑动的距离
-
-        private boolean isLoadLastState = false;//是否加载了之前的状态
-
-
+    static class HorizontalViewHolder extends RecyclerView.ViewHolder {
+        private BannerViewPager bannerViewPager;
         public HorizontalViewHolder(@NonNull View itemView) {
             super(itemView);
-            hor_recyclerview = (RecyclerView) itemView.findViewById(R.id.choice_recycler);
-            //为了保存移动距离，所以添加滑动监听
-            hor_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    //每次条目重新加载时，都会滑动到上次的距离
-                    if (!isLoadLastState) {
-                        isLoadLastState = true;
-                        hor_recyclerview.scrollBy(HORIZONTAL_VIEW_X, 0);
-                    }
-                    //dx为每一次移动的距离，所以我们需要做累加操作
-                    scrollX += dx;
-                }
-            });
-        }
-
-
-        /**
-         * 在条目回收时调用，保存X轴滑动的距离
-         */
-        public void saveStateWhenDestory() {
-            HORIZONTAL_VIEW_X = scrollX;
-            isLoadLastState = false;
-            scrollX = 0;
-        }
-    }
-
-    private static class HorizontalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-
-        private Context context;
-        //            private DataInfor data;
-        private List<Wall> walls;
-        private static int screenWidth;
-
-
-        public HorizontalAdapter(Context context,List<Wall> walls,int screenWidth){
-            this.context = context;
-            this.walls = walls;
-            this.screenWidth = screenWidth;
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//                return new ItemViewHolder(R.layout.item_x2_imageview, parent, viewType);
-            return new HorizontalViewHolderAnd(LayoutInflater.from(context).inflate(R.layout.adapter_choice_horizontal, null, false));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            HorizontalViewHolderAnd mholder = (HorizontalViewHolderAnd) holder;
-//                Glide.with(context).load(URLConst.BASE_URL+walls.get(position).thumbnail).into(mholder.choice_day_vertical_view);
-            Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.aaa);
-            mholder.choice_day_horizontal_view.setImageBitmap(bitmap);
-        }
-
-        @Override
-        public int getItemCount() {
-            return 8;
-        }
-
-        static class HorizontalViewHolderAnd extends RecyclerView.ViewHolder {
-            public ImageView choice_day_horizontal_view;
-            private View itemView;
-
-            public HorizontalViewHolderAnd(View itemView) {
-                super(itemView);
-                this.itemView = itemView;
-                choice_day_horizontal_view = itemView.findViewById(R.id.choice_day_horizontal_view);
-
-                if(choice_day_horizontal_view!=null){
-                    ViewGroup.LayoutParams layoutParams = choice_day_horizontal_view.getLayoutParams();
-                    layoutParams.width = layoutParams.height = screenWidth / 3;
-                }
-
-            }
+            bannerViewPager = itemView.findViewById(R.id.normal_banner);
         }
 
     }
