@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,9 +69,11 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void bindView(View view, final Wall data, int position) {
                     ImageView imageView = view.findViewById(R.id.loop_icon);
+                    TextView loop_text = view.findViewById(R.id.loop_text);
                     Glide.with(view)
-                            .load(data.thumbnail)
+                            .load(URLConst.BASE_URL+data.thumbnail)
                             .into(imageView);
+                    loop_text.setText(data.title);
                 }
 
                 @Override

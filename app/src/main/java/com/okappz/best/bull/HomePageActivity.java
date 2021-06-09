@@ -48,7 +48,7 @@ public class HomePageActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         WallFragmentPagerAdapter wallFragmentPagerAdapter = new WallFragmentPagerAdapter(fragmentManager, fragments);
         viewPager.setAdapter(wallFragmentPagerAdapter);
-
+        viewPager.setOffscreenPageLimit(3);
         wallFragmentPagerAdapter.addAll(new ArrayList<>(Arrays.asList(
                 R.drawable.ic_3d_rotation_white_36dp,
                 R.drawable.ic_accessibility_white_36dp,

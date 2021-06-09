@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     app:cardCornerRadius="4dp"
     android:orientation="vertical">
@@ -22,10 +21,9 @@
             android:id="@+id/loop_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
             android:textSize="16sp"
+            android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:clickable="true"
             android:textColor="@color/white"/>
 
 
