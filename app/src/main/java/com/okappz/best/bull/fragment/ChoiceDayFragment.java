@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.nukc.LoadMoreWrapper.LoadMoreAdapter;
+import com.github.nukc.LoadMoreWrapper.LoadMoreWrapper;
 import com.google.gson.reflect.TypeToken;
 import com.okappz.best.bull.R;
 import com.okappz.best.bull.adapter.ChoiceDayAdapter;
@@ -34,6 +37,8 @@ public class ChoiceDayFragment extends Fragment {
     private int screenWidth;
     private RecyclerView recyclerView;
     private ChoiceDayAdapter choiceDayAdapter;
+    private int page = 0;
+    LoadMoreWrapper mWrapper;
 
 
     private static final int[] RESID = {
@@ -70,9 +75,19 @@ public class ChoiceDayFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_everyday);
         GridLayoutManager manager = new GridLayoutManager(view.getContext(), 3);
         recyclerView.setLayoutManager(manager);
-        choiceDayAdapter  = new ChoiceDayAdapter(getContext(), screenWidth);
+        choiceDayAdapter = new ChoiceDayAdapter(getContext(), screenWidth);
         recyclerView.setAdapter(choiceDayAdapter);
-
+        mWrapper = LoadMoreWrapper.with(choiceDayAdapter)
+                .setFooterView(R.layout.base_footer) // view or layout resource
+                .setShowNoMoreEnabled(true) // enable show NoMoreView，default false
+                .setListener(new LoadMoreAdapter.OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore(LoadMoreAdapter.Enabled enabled) {
+                        page++;
+                        dowJsonVertical(page);
+                    }
+                });
+        mWrapper.into(recyclerView);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -91,7 +106,6 @@ public class ChoiceDayFragment extends Fragment {
                 new Callback() {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
-                        dowJsonVertical();
                     }
 
                     @Override
@@ -100,15 +114,14 @@ public class ChoiceDayFragment extends Fragment {
                         List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
                         }.getType());
                         choiceDayAdapter.addHorizontalDatas(walls);
-                        dowJsonVertical();
                     }
                 });
     }
 
 
-    public void dowJsonVertical() {
+    public void dowJsonVertical(int page) {
         OkHttpUtil.getDefault(this).doGetAsync(
-                HttpInfo.Builder().setUrl(BASE_URL + CHOICEDAY).build(),
+                HttpInfo.Builder().addParam("page", String.valueOf(page)).setUrl(BASE_URL + CHOICEDAY).build(),
                 new Callback() {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
