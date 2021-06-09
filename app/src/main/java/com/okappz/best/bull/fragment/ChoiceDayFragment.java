@@ -87,31 +87,31 @@ public class ChoiceDayFragment extends Fragment {
             @Override
             public void run() {
 //                dowJsonHorizontal();
-//                dowJsonVertical();
+                dowJsonVertical();
             }
         }).start();
 
 
     }
 
-    public void dowJsonHorizontal() {
-        OkHttpUtil.getDefault(this).doGetAsync(
-                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
-                new Callback() {
-                    @Override
-                    public void onFailure(HttpInfo info) throws IOException {
-                    }
-
-                    @Override
-                    public void onSuccess(HttpInfo info) throws IOException {
-                        String sJson = info.getRetDetail();
-                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
-                        }.getType());
-                        ChoiceDayAdapter choiceDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
-                        recyclerView.setAdapter(choiceDayAdapter);
-                    }
-                });
-    }
+//    public void dowJsonHorizontal() {
+//        OkHttpUtil.getDefault(this).doGetAsync(
+//                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
+//                new Callback() {
+//                    @Override
+//                    public void onFailure(HttpInfo info) throws IOException {
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(HttpInfo info) throws IOException {
+//                        String sJson = info.getRetDetail();
+//                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
+//                        }.getType());
+//                        ChoiceDayAdapter choiceDayAdapter = new ChoiceDayAdapter(getContext(),screenWidth,mDatas,walls);
+//                        recyclerView.setAdapter(choiceDayAdapter);
+//                    }
+//                });
+//    }
 
     public void dowJsonVertical() {
         OkHttpUtil.getDefault(this).doGetAsync(
