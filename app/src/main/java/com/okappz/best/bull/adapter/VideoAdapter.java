@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.okappz.best.bull.R;
 import com.okappz.best.bull.VideoActivity;
+import com.okappz.best.bull.entty.Video;
 import com.okappz.best.bull.entty.Wall;
 import com.okappz.best.bull.net.URLConst;
 
@@ -20,13 +21,13 @@ import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Wall> walls; // 数据源
+    private List<Video> videos; // 数据源
     private Context context;
     private static int screenWidth;
-    private static ViewGroup.LayoutParams layoutParams ;
+    private static ViewGroup.LayoutParams layoutParams;
 
-    public VideoAdapter(Context context, List<Wall> walls,int screenWidth) {
-        this.walls = walls;
+    public VideoAdapter(Context context, List<Video> videos, int screenWidth) {
+        this.videos = videos;
         this.context = context;
         this.screenWidth = screenWidth;
     }
@@ -40,19 +41,15 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MainViewHolder mholder = (MainViewHolder)holder;
+        MainViewHolder mholder = (MainViewHolder) holder;
 
-        String hum = walls.get(position).getPreview();
+        String hum = videos.get(position).thumbnail;
+        String url = URLConst.BASE_URL + URLConst.VIDEO_PATH + hum;
 
-
-        Glide.with(context).load(URLConst.BASE_URL+walls.get(position).thumbnail).into(mholder.video_img);
+        Glide.with(context).load(url).into(mholder.video_img);
         mholder.video_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, VideoActivity.class);
-                intent.putExtra(VideoActivity.THUMBNAIL,walls.get(position).getPreview());
-                intent.putExtra(VideoActivity.PREVIEW,walls.get(position).getPreview());
-                context.startActivity(intent);
             }
         });
 
@@ -60,7 +57,7 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return walls.size();
+        return videos.size();
     }
 
     static class MainViewHolder extends RecyclerView.ViewHolder {

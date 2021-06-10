@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.reflect.TypeToken;
 import com.okappz.best.bull.R;
+import com.okappz.best.bull.adapter.SortAdapter;
 import com.okappz.best.bull.adapter.VideoAdapter;
+import com.okappz.best.bull.entty.Sort;
+import com.okappz.best.bull.entty.Video;
 import com.okappz.best.bull.entty.Wall;
 import com.okappz.best.bull.net.GsonUtil;
 import com.okhttplib.HttpInfo;
@@ -26,10 +30,10 @@ import java.util.List;
 
 import static com.okappz.best.bull.net.URLConst.BASE_URL;
 import static com.okappz.best.bull.net.URLConst.CHOICEDAY;
+import static com.okappz.best.bull.net.URLConst.SORT;
+import static com.okappz.best.bull.net.URLConst.VIDEO;
 
 public class VideoFragment extends Fragment {
-    //    private List<Wall> walls;
-    private Wall wall;
     private int screenWidth;
     RecyclerView recyclerView;
 
@@ -63,22 +67,52 @@ public class VideoFragment extends Fragment {
 
     public void dowJson() {
         OkHttpUtil.getDefault(this).doGetAsync(
-                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
+                HttpInfo.Builder().addParam("page","1").setUrl(BASE_URL+VIDEO).build(),
                 new Callback() {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
-
+                        Toast.makeText(getContext(),"出错了",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onSuccess(HttpInfo info) throws IOException {
                         String sJson = info.getRetDetail();
-                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
+                        List<Video> videos = GsonUtil.fromJsonString(sJson, new TypeToken<List<Video>>() {
                         }.getType());
-                        VideoAdapter videoAdapter = new VideoAdapter(getContext(), walls, screenWidth);
-                        recyclerView.setAdapter(videoAdapter);
+                        VideoAdapter sortAdapter = new VideoAdapter(getContext(),videos,screenWidth);
+                        recyclerView.setAdapter(sortAdapter);
                     }
                 });
     }
+
+
+
+
+
+
+
+
+
+
+
+//    public void dowJson() {
+//        OkHttpUtil.getDefault(this).doGetAsync(
+//                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
+//                new Callback() {
+//                    @Override
+//                    public void onFailure(HttpInfo info) throws IOException {
+//
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(HttpInfo info) throws IOException {
+//                        String sJson = info.getRetDetail();
+//                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
+//                        }.getType());
+//                        VideoAdapter videoAdapter = new VideoAdapter(getContext(), walls, screenWidth);
+//                        recyclerView.setAdapter(videoAdapter);
+//                    }
+//                });
+//    }
 
 }
