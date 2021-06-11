@@ -8,25 +8,52 @@
         android:id="@+id/show_choice_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"/>
     <ImageView
-        android:id="@+id/back_view"
+        android:id="@+id/back_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="17dp"
-        android:src="@drawable/ic_back" />
-    <Button
-        android:id="@+id/set_view"
-        android:text="Set"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
+        android:src="@drawable/ic_back"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/set_to_phone_text"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="75dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="55dp"
+        android:background="@drawable/button_bg"
+        android:gravity="center"
+        android:text="@string/choice_dow_button"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"/>
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/choice_show_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/progress_bar"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:text="@string/choice_dow_text"
+        android:textColor="@android:color/white" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="300dp"
+        android:layout_height="15dp"
+        android:layout_centerInParent="true"
+        android:max="100"
+        android:progressDrawable="@drawable/progressbar_bg" />
 
 </RelativeLayout>

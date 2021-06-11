@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.telephony.mbms.FileInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.okappz.best.bull.net.URLConst;
-import com.okappz.best.bull.util.UtilDownload;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.bean.DownloadFileInfo;
@@ -49,7 +47,7 @@ public class VideoActivity extends AppCompatActivity {
 
 
 //        dowTOPhone();
-        findViewById(R.id.back_view).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

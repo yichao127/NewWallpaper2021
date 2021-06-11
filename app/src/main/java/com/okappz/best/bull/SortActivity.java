@@ -51,7 +51,7 @@ public class SortActivity extends AppCompatActivity {
         JsonId = intent.getLongExtra(JSON_ID, 0);
 
         recyclerView = findViewById(R.id.activity_sort_recycler);
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
+        GridLayoutManager manager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(manager);
 
         new Thread(new Runnable() {

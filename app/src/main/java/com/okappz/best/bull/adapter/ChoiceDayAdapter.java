@@ -25,7 +25,7 @@ import java.util.List;
 
 
 public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Wall> VerticalDatas = new ArrayList<>();; // 数据源
+    private List<Wall> verticalDatas = new ArrayList<>();; // 数据源
     private static List<Wall> horizontalDatas;
     private Context context;
     private static int screenWidth;
@@ -35,7 +35,7 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public ChoiceDayAdapter(Context context, int screenWidth) {
         this.context = context;
-        VerticalDatas.add(new Wall());
+        verticalDatas.add(new Wall());
         ChoiceDayAdapter.screenWidth = screenWidth;
     }
 
@@ -45,7 +45,7 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void addVerticalDatas(List<Wall> VerticalDatas) {
-        this.VerticalDatas.addAll(VerticalDatas);
+        this.verticalDatas.addAll(VerticalDatas);
         notifyDataSetChanged();
     }
 
@@ -83,13 +83,13 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
         } else {
             VerticalViewHolder mholder = (VerticalViewHolder) holder;
-            Glide.with(context).load(URLConst.BASE_URL + VerticalDatas.get(position).thumbnail).into(mholder.choice_day_vertical_view);
+            Glide.with(context).load(URLConst.BASE_URL + verticalDatas.get(position).thumbnail).into(mholder.choice_day_vertical_view);
             mholder.choice_day_vertical_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ChoiceDayActivity.class);
-                    intent.putExtra(VideoActivity.THUMBNAIL, VerticalDatas.get(position).getPreview());
-                    intent.putExtra(VideoActivity.PREVIEW, VerticalDatas.get(position).getPreview());
+                    intent.putExtra(VideoActivity.THUMBNAIL, verticalDatas.get(position).getThumbnail());
+                    intent.putExtra(VideoActivity.PREVIEW, verticalDatas.get(position).getPreview());
                     context.startActivity(intent);
                 }
             });
@@ -99,7 +99,7 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return VerticalDatas.size();
+        return verticalDatas.size();
     }
 
     @Override

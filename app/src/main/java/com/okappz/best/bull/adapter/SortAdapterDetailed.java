@@ -58,7 +58,8 @@ public class SortAdapterDetailed extends RecyclerView.Adapter<RecyclerView.ViewH
             this.itemView = itemView;
             sortdetailed_img = itemView.findViewById(R.id.sortdetailed_img);
             layoutParams = sortdetailed_img.getLayoutParams();
-            layoutParams.height = screenWidth / 2;
+//            layoutParams.height = screenWidth / 2;
+            layoutParams.width = layoutParams.height = screenWidth / 3;
         }
     }
 

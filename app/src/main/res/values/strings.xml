@@ -3,4 +3,6 @@
     <string name="title_name_1">Every Day</string>
     <string name="title_name_2">Video</string>
     <string name="title_name_3">Sort</string>
+    <string name="choice_dow_button">Set Choice</string>
+    <string name="choice_dow_text">Downloading ChoiceDay</string>
 </resources>
