@@ -91,10 +91,10 @@ public class ChoiceDayActivity extends AppCompatActivity {
 
     public void dowTOPhone() {
 
-//        WallActivity.this.getFilesDir().getAbsolutePath();    可以获取到 SDCard/Android/data/你的应用的包名/files/
-//        /data/user/0/com.magic.emoji.pho/files
+//        ChoiceDayActivity.this.getFilesDir().getAbsolutePath();    可以获取到 SDCard/Android/data/你的应用的包名/files/
+//        /data/user/0/com.magic.NewWallpaper2012.pho/files
         String filesDirPath = getFilesDir().getAbsolutePath();
-//        /data/user/0/com.magic.emoji.pho/files/emojidow
+//        /data/user/0/com.magic.NewWallpaper2012.pho/files/newWallpaper2012
         String appPath = filesDirPath + "/newWallpaper2012";
 //        String appPath = "SDCard/Android/data/newWallpaper2012";
         File file = new File(appPath);
