@@ -142,7 +142,6 @@ public class ChoiceDayActivity extends AppCompatActivity {
         }).start();
     }
 
-
     //设置桌面壁纸
     public void SetWallPaper() {
         WallpaperManager mWallManager = WallpaperManager.getInstance(this);
@@ -153,38 +152,5 @@ public class ChoiceDayActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private void download(){
-//        String fileName=  preview.substring(preview.lastIndexOf("/")+1);
-//        if(null == fileInfo)
-//            fileInfo = new DownloadFileInfo(URLConst.BASE_URL+preview, fileName,new ProgressCallback(){
-//                @Override
-//                public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
-//                    Log.d("PATH_DOWNLOAD","preview"+percent);
-//                }
-//                @Override
-//                public void onResponseMain(String filePath, HttpInfo info) {
-//                    if(info.isSuccessful()){
-//                        Toast.makeText(ChoiceDayActivity.this,fileInfo.getDownloadStatus(),Toast.LENGTH_SHORT).show();
-//                    }else{
-//                        Toast.makeText(ChoiceDayActivity.this,info.getRetDetail(),Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-//        HttpInfo info = HttpInfo.Builder().addDownloadFile(fileInfo).build();
-//        OkHttpUtil.Builder().setReadTimeout(120).build(this).doDownloadFileAsync(info);
-//    }
 
 }
