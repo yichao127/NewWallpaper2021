@@ -44,12 +44,17 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         MainViewHolder mholder = (MainViewHolder) holder;
 
         String hum = videos.get(position).thumbnail;
+        String link = videos.get(position).link;
         String url = URLConst.BASE_URL + URLConst.VIDEO_PATH + hum;
 
         Glide.with(context).load(url).into(mholder.video_img);
         mholder.video_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(context,VideoActivity.class);
+                intent.putExtra(VideoActivity.PREVIEW,link);
+                intent.putExtra(VideoActivity.THUMBNAIL,hum);
+                context.startActivity(intent);
             }
         });
 
@@ -72,4 +77,5 @@ public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             layoutParams.width = layoutParams.height = screenWidth / 2;
         }
     }
+
 }

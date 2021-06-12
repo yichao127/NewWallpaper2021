@@ -1,27 +1,26 @@
 package com.okappz.best.bull;
 
-import android.app.WallpaperManager;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.okappz.best.bull.net.URLConst;
+import com.okappz.best.bull.util.UtilDownload;
 import com.okhttplib.HttpInfo;
 import com.okhttplib.OkHttpUtil;
 import com.okhttplib.bean.DownloadFileInfo;
 import com.okhttplib.callback.ProgressCallback;
-
-import java.io.IOException;
 
 public class VideoActivity extends AppCompatActivity {
     public static final String THUMBNAIL = "THUMBNAIL";
@@ -32,6 +31,10 @@ public class VideoActivity extends AppCompatActivity {
 
     private ImageView showVideo;
     private DownloadFileInfo fileInfo;
+
+    private VideoView videoView;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +45,10 @@ public class VideoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         thumbnail = intent.getStringExtra(THUMBNAIL);
         preview = intent.getStringExtra(PREVIEW);
+        videoView=findViewById(R.id.video_view);
+        progressBar=findViewById(R.id.video_progress_bar);
 
-        Glide.with(this).load(URLConst.BASE_URL+thumbnail).into(showVideo);
+        Glide.with(this).load(URLConst.BASE_URL + URLConst.VIDEO_PATH+thumbnail).into(showVideo);
 
 
 //        dowTOPhone();
@@ -60,36 +65,37 @@ public class VideoActivity extends AppCompatActivity {
             }
         });
 
-download();
+        download();
 
     }
 
     public void SetTable() {
-
-
-        WallpaperManager mWallManager = WallpaperManager.getInstance(this);
-        try {
-            Bitmap bitmap = BitmapFactory.decodeFile(URLConst.BASE_URL+preview);
-            mWallManager.setBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    private void download(){
-        String fileName=  preview.substring(preview.lastIndexOf("/")+1);
-        if(null == fileInfo)
-            fileInfo = new DownloadFileInfo(URLConst.BASE_URL+preview, fileName,new ProgressCallback(){
+
+
+    private void download() {
+        String fileName = preview.substring(preview.lastIndexOf("/") + 1);
+        if (null == fileInfo)
+            fileInfo = new DownloadFileInfo(URLConst.BASE_URL +URLConst.VIDEO_PATH+ preview, fileName, new ProgressCallback() {
                 @Override
                 public void onProgressMain(int percent, long bytesWritten, long contentLength, boolean done) {
-                    Log.d("PATH_DOWNLOAD","preview"+percent);
+                    progressBar.setProgress(percent);
                 }
+
                 @Override
                 public void onResponseMain(String filePath, HttpInfo info) {
-                    if(info.isSuccessful()){
-                        Toast.makeText(VideoActivity.this,fileInfo.getDownloadStatus(),Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(VideoActivity.this,info.getRetDetail(),Toast.LENGTH_SHORT).show();
+                    if (info.isSuccessful()) {
+                        videoView.setVideoPath(UtilDownload.getPathDownload()+fileName);
+                        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                videoView.start();
+                            }
+                        });
+                        videoView.start();
+                    } else {
+                        Toast.makeText(VideoActivity.this, info.getRetDetail(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

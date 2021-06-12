@@ -85,34 +85,4 @@ public class VideoFragment extends Fragment {
                 });
     }
 
-
-
-
-
-
-
-
-
-
-
-//    public void dowJson() {
-//        OkHttpUtil.getDefault(this).doGetAsync(
-//                HttpInfo.Builder().setUrl(BASE_URL+ CHOICEDAY).build(),
-//                new Callback() {
-//                    @Override
-//                    public void onFailure(HttpInfo info) throws IOException {
-//
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(HttpInfo info) throws IOException {
-//                        String sJson = info.getRetDetail();
-//                        List<Wall> walls = GsonUtil.fromJsonString(sJson, new TypeToken<List<Wall>>() {
-//                        }.getType());
-//                        VideoAdapter videoAdapter = new VideoAdapter(getContext(), walls, screenWidth);
-//                        recyclerView.setAdapter(videoAdapter);
-//                    }
-//                });
-//    }
-
 }
