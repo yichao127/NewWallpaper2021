@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.okappz.best.bull.ChoiceDayActivity;
+import com.okappz.best.bull.StaticImageActivity;
 import com.okappz.best.bull.R;
 import com.okappz.best.bull.VideoActivity;
 import com.okappz.best.bull.entty.Wall;
@@ -87,7 +87,7 @@ public class ChoiceDayAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mholder.choice_day_vertical_view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ChoiceDayActivity.class);
+                    Intent intent = new Intent(context, StaticImageActivity.class);
                     intent.putExtra(VideoActivity.THUMBNAIL, verticalDatas.get(position).getThumbnail());
                     intent.putExtra(VideoActivity.PREVIEW, verticalDatas.get(position).getPreview());
                     context.startActivity(intent);

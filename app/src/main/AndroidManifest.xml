@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewWallpaper2021">
         <activity android:name=".HomePageActivity"/>
-        <activity android:name=".ChoiceDayActivity"/>
+        <activity android:name=".StaticImageActivity"/>
         <activity android:name=".VideoActivity"/>
         <activity android:name=".SortActivity"/>
         <activity android:name=".MainActivity">

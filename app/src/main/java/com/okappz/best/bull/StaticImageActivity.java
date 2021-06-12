@@ -24,7 +24,7 @@ import com.okhttplib.callback.ProgressCallback;
 
 import java.io.IOException;
 
-public class ChoiceDayActivity extends AppCompatActivity {
+public class StaticImageActivity extends AppCompatActivity {
 
     public static final String THUMBNAIL = "THUMBNAIL";
     public static final String PREVIEW = "PREVIEW";
@@ -45,7 +45,7 @@ public class ChoiceDayActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_choice_day);
+        setContentView(R.layout.activity_static_image);
         Intent intent = getIntent();
         thumbnail = intent.getStringExtra(THUMBNAIL);
         preview = intent.getStringExtra(PREVIEW);
@@ -77,7 +77,7 @@ public class ChoiceDayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SetWallPaper();
                 setToPhone.setVisibility(View.GONE);
-                Toast.makeText(ChoiceDayActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StaticImageActivity.this, "Success", Toast.LENGTH_SHORT).show();
             }
         });
         download();
@@ -111,9 +111,9 @@ public class ChoiceDayActivity extends AppCompatActivity {
                         choiceImgshowText.setVisibility(View.INVISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
                         back.setVisibility(View.VISIBLE);
-                        Toast.makeText(ChoiceDayActivity.this, fileInfo.getDownloadStatus(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StaticImageActivity.this, fileInfo.getDownloadStatus(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ChoiceDayActivity.this, info.getRetDetail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StaticImageActivity.this, info.getRetDetail(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
