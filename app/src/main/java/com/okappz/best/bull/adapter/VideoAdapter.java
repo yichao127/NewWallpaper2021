@@ -17,19 +17,23 @@ import com.okappz.best.bull.entty.Video;
 import com.okappz.best.bull.entty.Wall;
 import com.okappz.best.bull.net.URLConst;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Video> videos; // 数据源
+    private List<Video> videos=new ArrayList<>(); // 数据源
     private Context context;
     private static int screenWidth;
     private static ViewGroup.LayoutParams layoutParams;
 
-    public VideoAdapter(Context context, List<Video> videos, int screenWidth) {
-        this.videos = videos;
+    public VideoAdapter(Context context, int screenWidth) {
         this.context = context;
-        this.screenWidth = screenWidth;
+        VideoAdapter.screenWidth = screenWidth;
+    }
+
+    public void addData(List<Video> videos){
+       this. videos.addAll(videos);
     }
 
 
