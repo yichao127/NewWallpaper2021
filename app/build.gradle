@@ -40,5 +40,4 @@ dependencies {
     implementation 'com.zhousf.lib:okhttp3:2.9.9'
     implementation 'com.nshmura:recyclertablayout:1.5.0'
     implementation 'com.github.LillteZheng.ViewPagerHelper:viewpagerlibx:v2.9'
-    implementation 'com.liulishuo.filedownloader:library:1.7.7'
 }
