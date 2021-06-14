@@ -57,7 +57,6 @@ public class VideoFragment extends Fragment {
         GridLayoutManager manager = new GridLayoutManager(view.getContext(), 2);
         recyclerView.setLayoutManager(manager);
         videoAdapter = new VideoAdapter(getContext(), screenWidth);
-        recyclerView.setAdapter(videoAdapter);
         mWrapper = LoadMoreWrapper.with(videoAdapter)
                 .setFooterView(R.layout.base_footer) // view or layout resource
                 .setShowNoMoreEnabled(true) // enable show NoMoreView，default false

@@ -76,7 +76,6 @@ public class ChoiceDayFragment extends Fragment {
         GridLayoutManager manager = new GridLayoutManager(view.getContext(), 3);
         recyclerView.setLayoutManager(manager);
         choiceDayAdapter = new ChoiceDayAdapter(getContext(), screenWidth);
-        recyclerView.setAdapter(choiceDayAdapter);
         mWrapper = LoadMoreWrapper.with(choiceDayAdapter)
                 .setFooterView(R.layout.base_footer) // view or layout resource
                 .setShowNoMoreEnabled(true) // enable show NoMoreView，default false
