@@ -22,5 +22,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 500);
         Toast.makeText(this,"",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"",Toast.LENGTH_LONG).show();
     }
 }
