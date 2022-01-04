@@ -60,7 +60,6 @@ public class SortActivity extends AppCompatActivity {
                 dowJson();
             }
         }).start();
-        Toast.makeText(this,"",Toast.LENGTH_LONG).show();
     }
 
     public void dowJson() {
