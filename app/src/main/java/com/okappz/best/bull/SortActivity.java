@@ -61,6 +61,7 @@ public class SortActivity extends AppCompatActivity {
             }
         }).start();
         Toast.makeText(this,"",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"",Toast.LENGTH_LONG).show();
     }
 
     public void dowJson() {
