@@ -63,6 +63,7 @@ public class SortActivity extends AppCompatActivity {
     }
 
     public void dowJson() {
+        Toast.makeText(this,"",Toast.LENGTH_LONG).show();
         OkHttpUtil.getDefault(this).doPostAsync(
                 HttpInfo.Builder().addParam("id", String.valueOf(JsonId)).setUrl(BASE_URL + SORT).build(),
                 new Callback() {
