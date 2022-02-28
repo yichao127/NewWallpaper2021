@@ -72,6 +72,7 @@ public class SortActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(HttpInfo info) throws IOException {
                         Toast.makeText(SortActivity.this, "出错了", Toast.LENGTH_SHORT).show();
+                        //1015
                     }
 
                     @Override
