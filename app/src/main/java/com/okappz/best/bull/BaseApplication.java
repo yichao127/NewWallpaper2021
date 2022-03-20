@@ -17,21 +17,45 @@ import com.okhttplib.cookie.persistence.SharedPrefsCookiePersistor;
 import java.io.File;
 import java.io.IOException;
 
-public class BaseApplication extends Application {
-  private static   Application instance;
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.engine.FlutterEngineCache;
+import io.flutter.embedding.engine.dart.DartExecutor;
 
+public class BaseApplication extends Application {
+    private static Application instance;
+    public FlutterEngine flutterEngine;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance=this;
+        instance = this;
         initNet();
+        initFlutterEngine();
     }
-    public static Application getInstance(){
+
+    public static Application getInstance() {
         return instance;
     }
 
-    private void initNet(){
+    private void initFlutterEngine() {
+        // Instantiate a FlutterEngine.
+        flutterEngine = new FlutterEngine(this);
+
+        // Configure an initial route.
+        flutterEngine.getNavigationChannel().setInitialRoute("your/route/here");
+
+        // Start executing Dart code to pre-warm the FlutterEngine.
+        flutterEngine.getDartExecutor().executeDartEntrypoint(
+                DartExecutor.DartEntrypoint.createDefault()
+        );
+
+        // Cache the FlutterEngine to be used by FlutterActivity.
+        FlutterEngineCache
+                .getInstance()
+                .put("my_engine_id", flutterEngine);
+    }
+
+    private void initNet() {
         String downloadFileDir = UtilDownload.getPathDownload();
         String cacheDir = UtilDownload.getPathCache();
         OkHttpUtil.init(this)
