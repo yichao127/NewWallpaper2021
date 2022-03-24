@@ -17,6 +17,7 @@ import com.okhttplib.cookie.persistence.SharedPrefsCookiePersistor;
 import java.io.File;
 import java.io.IOException;
 
+import io.flutter.embedding.android.FlutterFragment;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.FlutterEngineCache;
 import io.flutter.embedding.engine.dart.DartExecutor;
@@ -42,7 +43,7 @@ public class BaseApplication extends Application {
         flutterEngine = new FlutterEngine(this);
 
         // Configure an initial route.
-        flutterEngine.getNavigationChannel().setInitialRoute("main_route");
+//        flutterEngine.getNavigationChannel().setInitialRoute("main_route");
 
         // Start executing Dart code to pre-warm the FlutterEngine.
         flutterEngine.getDartExecutor().executeDartEntrypoint(
@@ -53,6 +54,8 @@ public class BaseApplication extends Application {
         FlutterEngineCache
                 .getInstance()
                 .put("my_engine_id", flutterEngine);
+        //pre-warm the FlutterFragment
+        FlutterFragment.withCachedEngine("my_engine_id").build();
     }
 
     private void initNet() {

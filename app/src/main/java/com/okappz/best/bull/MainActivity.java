@@ -20,26 +20,31 @@ public class MainActivity extends AppCompatActivity {
                 /**
                  * 跳转到‘/’目录执行main函数
                  */
-                startActivity(FlutterActivity.createDefaultIntent(MainActivity.this));
+//                startActivity(FlutterActivity.createDefaultIntent(MainActivity.this));
 
 
                 /**
                  * 跳转到‘/my_route’目录执行main函数
                  */
-                startActivity(FlutterActivity
-                        .withNewEngine()
-                        .initialRoute("/main_route")
-                        .build(MainActivity.this));
+//                startActivity(FlutterActivity
+//                        .withNewEngine()
+//                        .initialRoute("/main_route")
+//                        .build(MainActivity.this));
 
                 /**
                  * 使用预热引擎
                  */
-                startActivity(
-                        FlutterActivity
-                                .withCachedEngine("my_engine_id")
-                                .build(MainActivity.this)
-                );
+//                startActivity(
+//                        FlutterActivity
+//                                .withCachedEngine("my_engine_id")
+//                                .build(MainActivity.this)
+//                );
 
+                /**
+                 * 启动FlutterFragment
+                 */
+                startActivity(new Intent(MainActivity.this, FlutterFragmentActivity.class)
+                );
             }
         }, 1000);
     }
