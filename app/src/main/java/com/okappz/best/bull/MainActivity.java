@@ -20,18 +20,20 @@ public class MainActivity extends AppCompatActivity {
                 /**
                  * 跳转到‘/’目录执行main函数
                  */
-                FlutterActivity.createDefaultIntent(MainActivity.this);
+                startActivity(FlutterActivity.createDefaultIntent(MainActivity.this));
 
 
                 /**
                  * 跳转到‘/my_route’目录执行main函数
                  */
-                FlutterActivity
+                startActivity(FlutterActivity
                         .withNewEngine()
-                        .initialRoute("/my_route")
-                        .build(MainActivity.this);
+                        .initialRoute("/main_route")
+                        .build(MainActivity.this));
 
-
+                /**
+                 * 使用预热引擎
+                 */
                 startActivity(
                         FlutterActivity
                                 .withCachedEngine("my_engine_id")

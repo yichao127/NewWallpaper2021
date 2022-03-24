@@ -42,7 +42,7 @@ public class BaseApplication extends Application {
         flutterEngine = new FlutterEngine(this);
 
         // Configure an initial route.
-        flutterEngine.getNavigationChannel().setInitialRoute("your/route/here");
+        flutterEngine.getNavigationChannel().setInitialRoute("main_route");
 
         // Start executing Dart code to pre-warm the FlutterEngine.
         flutterEngine.getDartExecutor().executeDartEntrypoint(
